@@ -3,12 +3,15 @@
 
 {% block content%}
         <h2 class="font-bold text-3xl pb-2">{{post.title}}</h2>
-        <div class="flex gap-4 pb-4 border-b-2 border-gray-200">
+        <div class="flex gap-4 pb-4 {% if not post.banner %}border-b-2 border-gray-200{% endif %}">
         {% for category in post.category.all%}
             <h3 class="text-xs font-medium text-green-700">{{category}}</h3>
         {% endfor %}
-        <p class="text-xs">{{post.created_on|date:'Y.m.d'}}</p>
+        <p class="text-xs">{{post.created_on}}</p>
         </div>
+        {% if post.banner %}
+        <img alt={{post.banner.description}} src="/media/{{post.banner.image}}" class="rounded m-4"/>
+        {% endif %}
         <article class="flex flex-col pt-4">
             <style scope>
                 article h1 {
@@ -31,6 +34,10 @@
                 }
                 article p {
                     padding-bottom: 1rem;
+                }
+                article p img {
+                    border-radius: 0.25rem;
+                    margin: 1rem;
                 }
             </style>
             {{post.body|markdown|safe}}

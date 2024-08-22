@@ -91,3 +91,4 @@ output.css
 output.*.css
 migrations/
 manifest.json
+media/

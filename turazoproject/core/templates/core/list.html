@@ -2,20 +2,23 @@
 {% load markdown_extras %}
 
 {% block content%}
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-4 divide-y divide-solid">
     {% for post in posts %}
     <div>
-        <div class="h-auto">
+        <div class="flex flex-row overflow-hidden pt-4">
             <a href={% url 'core_post' post.slug %}>
             {% if post.banner %}
-            <img class="rounded" alt={{post.banner.description}} src="/media/{{post.banner.image}}"/>
+            <img class="h-40 rounded" alt={{post.banner.description}} src="/media/{{post.banner.image}}"/>
+            <div class="pl-4">
+            {% else %}
+            <div>
             {% endif%}
-            <div class="pb-4 pt-2">
+            
             <h2 class="font-bold text-2xl pb-1">{{post.title}}</h2>
-            <div>{{post.body|truncatewords:12|markdown|safe|striptags}}</div>
             <h3 class="text-sm text-gray-500 pb-4">{{post.created_on}} | <a href={% url 'core_categories' post.category.slug %}>{{post.category|upper}}</a></h3>
+            <div>{{post.body|truncatewords:12|markdown|safe|striptags}}</div>
             </div>
-            </a>
+        </a>
         </div>
     </div>
     {% endfor%}
