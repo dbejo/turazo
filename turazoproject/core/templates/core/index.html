@@ -1,5 +1,17 @@
 {% extends "base.html" %}
+{% load markdown_extras %}
 
 {% block content%}
 Helló Túrázó!
+<div class="grid grid-cols-3 gap-4">
+    {% for post in posts %}
+        <div>
+            {% for category in post.category.all%}
+            <h3 class="text-xs font-medium text-green-700">{{category}}</h3>
+            {% endfor %}
+            <h2 class="font-bold">{{post.title}}</h2>
+            <div class="text-sm">{{post.body|truncatewords:9|markdown|safe}}</div>
+        </div>
+    {% endfor%}
+</div>
 {% endblock %}
