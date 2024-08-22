@@ -42,6 +42,7 @@
             </style>
             {{post.body|markdown|safe}}
         </article>
+        {% if related_posts|length > 0 %}
         <div class="pt-24">
         <span class="text-3xl font-semibold pt-12">Ez is érdekelhet</span>
         <div class="grid grid-cols-2 gap-8 pt-4">
@@ -57,6 +58,7 @@
             {% endfor %}
         </div>
         </div>
+        {% endif %}
         </div>
         <aside class="hidden lg:flex flex-col pt-4">
             <div class="flex flex-col gap-4 p-4 w-96 h-40 bg-gradient-to-bl from-blue-600 to-sky-500 dark:from-sky-700 dark:to-blue-800 rounded text-white justify-center items-center"><span class="text-2xl font-semibold">Facebook</span><p>Megtalálsz minket a Facebook-on!</p><a class="font-bold text-lg text-blue-500 dark:text-blue-700 bg-white rounded w-full p-2 text-center" href="https://www.facebook.com/turazohu/">Kedvelem &#9829;</a></div>
