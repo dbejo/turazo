@@ -4,15 +4,15 @@
 {% block content%}
         <h2 class="font-bold text-3xl pb-2">{{post.title}}</h2>
         <div class="flex gap-4 pb-4 {% if not post.banner %}border-b-2 border-gray-200{% endif %}">
-        {% for category in post.category.all%}
-            <h3 class="text-xs font-medium text-green-700">{{category}}</h3>
-        {% endfor %}
+        <h3 class="text-xs text-green-700 hover:text-green-500">{{post.category|upper}}</h3>
         <p class="text-xs">{{post.created_on}}</p>
         </div>
         {% if post.banner %}
-        <img alt={{post.banner.description}} src="/media/{{post.banner.image}}" class="rounded m-4"/>
+        <img alt={{post.banner.description}} src="/media/{{post.banner.image}}" class="rounded mt-4 mb-4"/>
         {% endif %}
-        <article class="flex flex-col pt-4">
+        <div class="flex gap-12">
+        <div class="flex flex-col pt-4">
+            <article>
             <style scope>
                 article h1 {
                     font-size: 1.5rem;
@@ -37,9 +37,40 @@
                 }
                 article p img {
                     border-radius: 0.25rem;
-                    margin: 1rem;
+                    margin-top: 1rem;
                 }
             </style>
             {{post.body|markdown|safe}}
         </article>
+        <div class="pt-24">
+        <span class="text-3xl font-semibold pt-12">Ez is érdekelhet</span>
+        <div class="grid grid-cols-2 gap-8 pt-4">
+            {% for related_post in related_posts %}
+                <div>
+                    <a href={% url 'core_post' related_post.slug %}>
+                    <img class="rounded" alt={{related_post.banner.description}} src="/media/{{related_post.banner.image}}"/>
+                    <div class="pb-4 pt-2">
+                    <h2 class="font-semibold text-xl pb-1">{{related_post.title}}</h2>
+                    </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+        </div>
+        <aside class="hidden lg:flex flex-col pt-4">
+            <div class="flex flex-col gap-4 p-4 w-96 h-40 bg-gradient-to-bl from-blue-600 to-sky-500 dark:from-sky-700 dark:to-blue-800 rounded text-white justify-center items-center"><span class="text-2xl font-semibold">Facebook</span><p>Megtalálsz minket a Facebook-on!</p><a class="font-bold text-lg text-blue-500 dark:text-blue-700 bg-white rounded w-full p-2 text-center" href="https://www.facebook.com/turazohu/">Kedvelem &#9829;</a></div>
+            <span class="text-3xl font-semibold pt-12">Újdonságok</span>
+            <div class="flex flex-col gap-4 divide-y">
+                {% for new_post in news %}
+                    <div class="flex pt-4">
+                        {% if new_post.banner %}
+                        <img class="w-32 pr-4" src="/media/{{new_post.banner.image}}" alt={{new_post.banner.description}}/>
+                        {% endif %}
+                        <a class="text-xl font-semibold" href={% url 'core_post' new_post.slug %}>{{new_post.title}}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </aside>
+    </div>
 {% endblock %}

@@ -13,7 +13,7 @@
             <div class="pb-4 pt-2">
             <h2 class="font-bold text-2xl pb-1">{{post.title}}</h2>
             <div>{{post.body|truncatewords:12|markdown|safe|striptags}}</div>
-            <h3 class="text-sm text-gray-500 pb-4">{{post.created_on}} | <a href={% url 'core_categories' post.category.slug %}>{{post.category|upper}}</a></h3>
+            <h3 class="text-sm text-gray-500 pb-4">{{post.created_on}} | <a class="text-green-700 hover:text-green-500" href={% url 'core_categories' post.category.slug %}>{{post.category|upper}}</a></h3>
             </div>
             </a>
         </div>
