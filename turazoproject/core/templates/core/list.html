@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 {% load markdown_extras %}
 
+{% block title %}{{title}}{% endblock%}
+
 {% block content%}
+<h1 class="font-bold text-3xl pb-2">{{title}}</h1>
 <div class="flex flex-col gap-4 divide-y">
     {% for post in posts %}
     <div>
-        <div class="flex flex-row overflow-hidden pt-4">
-            <a href={% url 'core_post' post.slug %}>
-            {% if post.banner %}
-            <img class="h-40 rounded" alt={{post.banner.description}} src="/media/{{post.banner.image}}"/>
-            <div class="pl-4">
-            {% else %}
-            <div>
-            {% endif%}
-            
-            <h2 class="font-bold text-2xl pb-1">{{post.title}}</h2>
-            <h3 class="text-sm text-gray-500 pb-4">{{post.created_on}} | <a class="text-green-700 hover:text-green-500" href={% url 'core_categories' post.category.slug %}>{{post.category|upper}}</a></h3>
-            <div>{{post.body|truncatewords:12|markdown|safe|striptags}}</div>
+        <a href={% url 'core_post' post.created_on.year post.created_on.month post.created_on.day post.slug %} class="hover:text-gray-700">
+            <div class="flex flex-row overflow-hidden pt-4">
+                {% if post.banner %}
+                <img class="h-40 rounded" alt={{post.banner.description}} src="/media/{{post.banner.image}}"/>
+                <div class="pl-4">
+                {% else %}
+                <div>
+                {% endif%}
+                
+                <h2 class="font-bold text-2xl pb-1">{{post.title}}</h2>
+                <div class="text-sm text-gray-500 pb-4"><a class="hover:text-gray-400" href={% url 'core_post_day' post.created_on.year post.created_on.month post.created_on.day %} >{{post.created_on}}</a> | <a class="text-green-700 hover:text-green-500" href={% url 'core_categories' post.category.slug %}>{{post.category|upper}}</a></div>
+                <div>{{post.body|truncatewords:12|markdown|safe|striptags}}</div>
+                </div>
             </div>
         </a>
-        </div>
     </div>
     {% endfor%}
 </div>

@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% load markdown_extras %}
 
+{% block title %}{{ post.title }}{% endblock%}
+
 {% block content%}
-        <h2 class="font-bold text-3xl pb-2">{{post.title}}</h2>
+        <h1 class="font-bold text-3xl pb-2">{{post.title}}</h1>
         <div class="flex justify-between">
         <div class="flex gap-4 pb-4 {% if not post.banner %}border-b-2 border-gray-200{% endif %}">
-        <h3 class="text-xs text-green-700 hover:text-green-500">{{post.category|upper}}</h3>
-        <p class="text-xs">{{post.created_on}}</p>
+        <a class="text-xs text-green-700 hover:text-green-500" href={% url 'core_categories' post.category.slug %}>{{post.category|upper}}</a>
+        <a class="text-xs hover:text-gray-600" href={% url 'core_post_day' post.created_on.year post.created_on.month post.created_on.day %} >{{post.created_on}}</a>
         </div>
         <a class="text-xs">Szerző: {{ post.author.last_name }} {{ post.author.first_name }}</a>
         </div>
@@ -51,7 +53,7 @@
         <div class="grid grid-cols-2 gap-8 pt-4">
             {% for related_post in related_posts %}
                 <div>
-                    <a href={% url 'core_post' related_post.slug %}>
+                    <a href={% url 'core_post' related_post.created_on.year related_post.created_on.month related_post.created_on.day related_post.slug %}>
                     <img class="rounded" alt={{related_post.banner.description}} src="/media/{{related_post.banner.image}}"/>
                     <div class="pb-4 pt-2">
                     <h2 class="font-semibold text-xl pb-1">{{related_post.title}}</h2>
@@ -72,7 +74,7 @@
                         {% if new_post.banner %}
                         <img class="w-32 pr-4" src="/media/{{new_post.banner.image}}" alt={{new_post.banner.description}}/>
                         {% endif %}
-                        <a class="text-xl font-semibold" href={% url 'core_post' new_post.slug %}>{{new_post.title}}</a>
+                        <a class="text-xl font-semibold" href={% url 'core_post' new_post.created_on.year new_post.created_on.month new_post.created_on.day new_post.slug %}>{{new_post.title}}</a>
                     </div>
                 {% endfor %}
             </div>
