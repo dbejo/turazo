@@ -3,9 +3,12 @@
 
 {% block content%}
         <h2 class="font-bold text-3xl pb-2">{{post.title}}</h2>
+        <div class="flex justify-between">
         <div class="flex gap-4 pb-4 {% if not post.banner %}border-b-2 border-gray-200{% endif %}">
         <h3 class="text-xs text-green-700 hover:text-green-500">{{post.category|upper}}</h3>
         <p class="text-xs">{{post.created_on}}</p>
+        </div>
+        <a class="text-xs">Szerző: {{ post.author.last_name }} {{ post.author.first_name }}</a>
         </div>
         {% if post.banner %}
         <img alt={{post.banner.description}} src="/media/{{post.banner.image}}" class="rounded mt-4 mb-4"/>
@@ -44,7 +47,7 @@
         </article>
         {% if related_posts|length > 0 %}
         <div class="pt-24">
-        <span class="text-3xl font-semibold pt-12">Ez is érdekelhet</span>
+        <a class="text-3xl font-semibold pt-12" href={% url 'core_categories' post.category.slug %}>Ez is érdekelhet</a>
         <div class="grid grid-cols-2 gap-8 pt-4">
             {% for related_post in related_posts %}
                 <div>
@@ -62,7 +65,7 @@
         </div>
         <aside class="hidden lg:flex flex-col pt-4">
             <div class="flex flex-col gap-4 p-4 w-96 h-40 bg-gradient-to-bl from-blue-600 to-sky-500 dark:from-sky-700 dark:to-blue-800 rounded text-white justify-center items-center"><span class="text-2xl font-semibold">Facebook</span><p>Megtalálsz minket a Facebook-on!</p><a class="font-bold text-lg text-blue-500 dark:text-blue-700 bg-white rounded w-full p-2 text-center" href="https://www.facebook.com/turazohu/">Kedvelem &#9829;</a></div>
-            <span class="text-3xl font-semibold pt-12">Újdonságok</span>
+            <a class="text-3xl font-semibold pt-12" href={% url 'core_news' %}>Újdonságok</a>
             <div class="flex flex-col gap-4 divide-y">
                 {% for new_post in news %}
                     <div class="flex pt-4">

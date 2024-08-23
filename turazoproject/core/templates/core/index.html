@@ -2,10 +2,9 @@
 {% load markdown_extras %}
 
 {% block content%}
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="columns-1 md:columns-3 gap-4">
     {% for post in posts %}
-    <div>
-        <div class="h-auto">
+        <div class="w-full break-inside-avoid">
             <a href={% url 'core_post' post.slug %}>
             {% if post.banner %}
             <img class="rounded" alt={{post.banner.description}} src="/media/{{post.banner.image}}"/>
@@ -17,7 +16,21 @@
             </div>
             </a>
         </div>
-    </div>
     {% endfor%}
+</div>
+<div class="flex justify-center items-center gap-2 {% if posts.paginator.num_pages == 1 %} hidden {% endif %}">
+<a {% if not posts.has_previous %}class="flex justify-center items-center h-10 p-1 text-gray-300" {% else %}class="flex justify-center items-center h-10 p-1" href="?oldal={{ posts.previous_page_number }}"{% endif %}>
+    <svg class="w-3.5 h-3.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+  </svg>
+</a>
+<div class="flex justify-center items-center h-10 p-1">
+{{posts.number}}/{{posts.paginator.num_pages}}
+</div>
+<a {% if not posts.has_next %}class="flex justify-center items-center h-10 p-1 text-gray-300" {% else %}class="flex justify-center items-center h-10 p-1" href="?oldal={{ posts.next_page_number }}"{% endif %}>
+    <svg class="w-3.5 h-3.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+      </svg>
+    </a>
 </div>
 {% endblock %}

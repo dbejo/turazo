@@ -45,7 +45,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
-    tag = models.ManyToManyField(Tag, null=True, blank=True)
+    tag = models.ManyToManyField(Tag, blank=True)
     slug = models.SlugField(null = False, unique=True)
     banner = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True, blank=True)
 
