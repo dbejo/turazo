@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from core.models import Post, Category
+from core.models import Post, Category, Tag
 import random
 from django.core.paginator import Paginator
 
@@ -35,6 +35,18 @@ def core_categories(request, slug):
     page = request.GET.get('oldal')
     posts = p.get_page(page)
     title = category.name
+    context = {
+        "posts": posts,
+        "title": title
+    }
+    return render(request, "core/list.html", context)
+
+def core_tags(request, slug):
+    tag = Tag.objects.get(slug=slug)
+    p = Paginator(Post.objects.filter(tag=tag), 10)
+    page = request.GET.get('oldal')
+    posts = p.get_page(page)
+    title = tag.name
     context = {
         "posts": posts,
         "title": title

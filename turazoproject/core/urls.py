@@ -9,5 +9,7 @@ urlpatterns = [
     path("cikk/<int:year>/", views.core_year),
     path("cikk/", views.redirect_view),
     path("kategoriak/<slug:slug>/", views.core_categories, name="core_categories"),
+    path("cimkek/<slug:slug>/", views.core_tags, name="core_tags"),
+    path("cimkek/", views.redirect_view),
     path("ujdonsagok/", views.core_news, name="core_news")
 ]
