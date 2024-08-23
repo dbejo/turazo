@@ -5,8 +5,8 @@
 
 {% block content%}
         <h1 class="font-bold text-3xl pb-2">{{post.title}}</h1>
-        <div class="flex justify-between">
-        <div class="flex gap-4 pb-4 {% if not post.banner %}border-b-2 border-gray-200{% endif %}">
+        <div class="flex justify-between {% if not post.banner %}border-b-2 border-gray-200{% endif %}">
+        <div class="flex gap-4 pb-4">
         <a class="text-xs text-green-700 hover:text-green-500 transition" href={% url 'core_categories' post.category.slug %}>{{post.category|upper}}</a>
         <a class="text-xs hover:text-gray-600 transition" href={% url 'core_post_day' post.created_on.year post.created_on.month post.created_on.day %} >{{post.created_on}}</a>
         </div>
