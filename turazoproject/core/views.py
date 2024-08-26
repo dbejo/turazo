@@ -2,12 +2,11 @@ from django.shortcuts import render, redirect
 from core.models import Post, Category, Tag
 import random
 from django.core.paginator import Paginator
-from utils import db
 
 # Create your views here.
 
 def core_index(request):
-    p = Paginator(list(db["core_post"].find().sort("created_on", -1)), 27)
+    p = Paginator(Post.objects.all().order_by("-created_on"), 27)
     page = request.GET.get('oldal')
     posts = p.get_page(page)
     context = {
